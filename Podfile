@@ -6,6 +6,7 @@ target 'TodoList' do
   use_frameworks!
 
   # Pods for TodoList
+  pod 'JTAppleCalendar'
 
   target 'TodoListTests' do
     inherit! :search_paths

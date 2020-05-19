@@ -9,18 +9,18 @@
 import UIKit
 
 class TaskListTableViewController: UITableViewController {
+    private let searchController      = UISearchController(searchResultsController: nil)
 
-    private let searchController = UISearchController(searchResultsController: nil)
+    var tasks: [Task]                 = []
+
     private var selectedTask: Task?
 
-    var tasks: [Task]         = []
-    var filteredTasks: [Task] = []
-
-    var isSearchBarEmpty: Bool {
+    private var filteredTasks: [Task] = []
+    private var expandedRows: [Bool]  = []
+    private var isSearchBarEmpty: Bool {
       return searchController.searchBar.text?.isEmpty ?? true
     }
-
-    var isFiltering: Bool {
+    private var isFiltering: Bool {
       return searchController.isActive && !isSearchBarEmpty
     }
 
@@ -42,6 +42,11 @@ class TaskListTableViewController: UITableViewController {
         searchController.searchBar.placeholder                = "Search Tasks"
         navigationItem.searchController                       = searchController
         definesPresentationContext                            = true
+
+        //Initialize expandedRows array. Used to keep track of expanded/collapsed state in row
+        expandedRows = tasks.map({ (_) -> Bool in
+            return false
+        })
 
     }
 
@@ -72,11 +77,12 @@ class TaskListTableViewController: UITableViewController {
         }
 
         cell.titleLabel.text       = task.title
-        cell.descriptionLabel.text = task.description
-        cell.dueDateLabel.text     = task.dueDate.description
+        cell.descriptionLabel.text = expandedRows[indexPath.row] ? task.description : ""
 
         return cell
     }
+
+    // MARK: - Table view delegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -87,15 +93,25 @@ class TaskListTableViewController: UITableViewController {
             selectedTask = tasks[indexPath.row]
         }
 
-        //TODO: Perform segue here
+        let expandedState = expandedRows[indexPath.row]
+        expandedRows[indexPath.row] = !expandedState
+
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 
+    // MARK: - Functions
     func filterContentForSearchText(_ searchText: String) {
         filteredTasks = tasks.filter { (task: Task) -> Bool in
         return task.title.lowercased().contains(searchText.lowercased())
       }
 
       tableView.reloadData()
+    }
+
+    // MARK: - IBActions
+
+    @IBAction func addTask(_ sender: Any) {
+        performSegue(withIdentifier: "addTaskSegue", sender: nil)
     }
 
 }

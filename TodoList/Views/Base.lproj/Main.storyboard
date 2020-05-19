@@ -21,7 +21,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zda-dr-WTF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-356" y="368"/>
+            <point key="canvasLocation" x="25" y="364"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Yz8-WH-ger">
@@ -33,15 +33,15 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="EzB-lW-fQP" kind="relationship" relationship="viewControllers" id="CKK-EJ-dvp"/>
-                        <segue destination="zRA-D2-pBs" kind="relationship" relationship="viewControllers" id="xfV-RB-5Hs"/>
+                        <segue destination="Wfj-Hv-Mmb" kind="relationship" relationship="viewControllers" id="daA-tm-hW2"/>
+                        <segue destination="zRA-D2-pBs" kind="relationship" relationship="viewControllers" id="M6s-9D-IFY"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3jI-Tv-mXK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1272" y="44"/>
         </scene>
-        <!--Task List Table View Controller-->
+        <!--Title-->
         <scene sceneID="duO-s0-EFF">
             <objects>
                 <tableViewController id="EzB-lW-fQP" customClass="TaskListTableViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
@@ -108,14 +108,39 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="" image="list.bullet" id="6P5-1j-StY"/>
+                    <navigationItem key="navigationItem" title="Title" id="eTn-kV-oIY">
+                        <rightBarButtonItems>
+                            <barButtonItem image="plus" catalog="system" id="WD1-jE-LFc"/>
+                            <barButtonItem image="line.horizontal.3.decrease.circle" catalog="system" id="Lz0-pA-ZlG"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xJv-Ft-W9Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-352.17391304347831" y="-375"/>
+            <point key="canvasLocation" x="884" y="-447"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="Qan-V2-U0X">
+            <objects>
+                <navigationController id="Wfj-Hv-Mmb" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="4K5-4C-OU4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jZj-K7-oq5">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="EzB-lW-fQP" kind="relationship" relationship="rootViewController" id="hD8-Nb-OAc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8uC-BS-F0R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="26" y="-447"/>
         </scene>
     </scenes>
     <resources>
         <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="line.horizontal.3.decrease.circle" catalog="system" width="128" height="121"/>
         <image name="list.bullet" width="17" height="13"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
     </resources>
 </document>

@@ -10,10 +10,19 @@ import UIKit
 
 class TaskListTableViewController: UITableViewController {
 
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var selectedTask: Task?
+
     var tasks: [Task]         = []
     var filteredTasks: [Task] = []
 
-    private let searchController = UISearchController(searchResultsController: nil)
+    var isSearchBarEmpty: Bool {
+      return searchController.searchBar.text?.isEmpty ?? true
+    }
+
+    var isFiltering: Bool {
+      return searchController.isActive && !isSearchBarEmpty
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +37,12 @@ class TaskListTableViewController: UITableViewController {
         tasks.append(task)
         tasks.append(anotherTask)
 
+        searchController.searchResultsUpdater                 = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder                = "Search Tasks"
+        navigationItem.searchController                       = searchController
+        definesPresentationContext                            = true
+
     }
 
     // MARK: - Table view data source
@@ -37,6 +52,10 @@ class TaskListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredTasks.count
+        }
+
         return tasks.count
     }
 
@@ -44,11 +63,47 @@ class TaskListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskCell
 
-        cell.titleLabel.text       = tasks[indexPath.row].title
-        cell.descriptionLabel.text = tasks[indexPath.row].description
-        cell.dueDateLabel.text     = tasks[indexPath.row].dueDate.description
+        let task: Task
+
+        if isFiltering {
+            task = filteredTasks[indexPath.row]
+        } else {
+            task = tasks[indexPath.row]
+        }
+
+        cell.titleLabel.text       = task.title
+        cell.descriptionLabel.text = task.description
+        cell.dueDateLabel.text     = task.dueDate.description
 
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        if isFiltering {
+            selectedTask = filteredTasks[indexPath.row]
+        } else {
+            selectedTask = tasks[indexPath.row]
+        }
+
+        //TODO: Perform segue here
+    }
+
+    func filterContentForSearchText(_ searchText: String) {
+        filteredTasks = tasks.filter { (task: Task) -> Bool in
+        return task.title.lowercased().contains(searchText.lowercased())
+      }
+
+      tableView.reloadData()
+    }
+
+}
+
+extension TaskListTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+       let searchBar = searchController.searchBar
+        filterContentForSearchText(searchBar.text!)
     }
 
 }

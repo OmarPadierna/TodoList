@@ -16,6 +16,7 @@ class TaskListTableViewController: UITableViewController {
     var user: User?
 
     private var selectedTask: Task?
+    private var indexPathForSelectedTask: IndexPath?
     private var searchResultTasks: [Task] = []
     private var expandedRows: [Bool]  = []
     private var isSearchBarEmpty: Bool {
@@ -166,6 +167,7 @@ class TaskListTableViewController: UITableViewController {
         switch (segue.destination, segue.identifier) {
         case (let vc as AddTaskViewController, _):
             vc.delegate = self
+            vc.selectedTask = selectedTask
         case (let vc as CalendarViewController, _):
             vc.delegate = self
         default:
@@ -204,81 +206,34 @@ class TaskListTableViewController: UITableViewController {
     }
 
     //We're dealing with 3 types of filtering: by status, by date and when searching. To preserve the task status when the user taps the cell button it is necessary to iterate through all the arrays (unfilteredTasks, tasks, and searchResultTasks) and update the task if it happens to exist in said array. In future iterations this whole controller could be refactored to move this logic out of here (And simplify it).
-    private func updateStatusFor(_ task: Task, at indexPath: IndexPath) {
+    private func update(_ task: Task, at indexPath: IndexPath) {
         let updateGroup = DispatchGroup()
 
-        switch task.status {
-        case .pending:
-            updateGroup.enter()
-            tasks = tasks.map { (arrayTask) -> Task in
-                if arrayTask.id == task.id {
-                    var updatedTask = arrayTask
-                    updatedTask.status = .done
-
-                    return updatedTask
-                }
-
-                return arrayTask
+        updateGroup.enter()
+        tasks = tasks.map { (arrayTask) -> Task in
+            if arrayTask.id == task.id {
+                return task
             }
 
-            searchResultTasks = searchResultTasks.map { (arrayTask) -> Task in
-                if arrayTask.id == task.id {
-                    var updatedTask = arrayTask
-                    updatedTask.status = .done
-
-                    return updatedTask
-                }
-
-                return arrayTask
-            }
-
-            unfilteredTasks = unfilteredTasks.map { (arrayTask) -> Task in
-                if arrayTask.id == task.id {
-                    var updatedTask = arrayTask
-                    updatedTask.status = .done
-
-                    return updatedTask
-                }
-
-                return arrayTask
-            }
-            updateGroup.leave()
-        case .done:
-           updateGroup.enter()
-            tasks = tasks.map { (arrayTask) -> Task in
-                if arrayTask.id == task.id {
-                    var updatedTask = arrayTask
-                    updatedTask.status = .pending
-
-                    return updatedTask
-                }
-
-                return arrayTask
-            }
-
-            searchResultTasks = searchResultTasks.map { (arrayTask) -> Task in
-                if arrayTask.id == task.id {
-                    var updatedTask = arrayTask
-                    updatedTask.status = .pending
-
-                    return updatedTask
-                }
-
-                return arrayTask
-            }
-
-            unfilteredTasks = unfilteredTasks.map { (arrayTask) -> Task in
-                if arrayTask.id == task.id {
-                    var updatedTask = arrayTask
-                    updatedTask.status = .pending
-
-                    return updatedTask
-                }
-
-                return arrayTask
-            }
-            updateGroup.leave()
+            return arrayTask
         }
+
+        searchResultTasks = searchResultTasks.map { (arrayTask) -> Task in
+            if arrayTask.id == task.id {
+                return task
+            }
+
+            return arrayTask
+        }
+
+        unfilteredTasks = unfilteredTasks.map { (arrayTask) -> Task in
+            if arrayTask.id == task.id {
+                return task
+            }
+
+            return arrayTask
+        }
+        updateGroup.leave()
 
         updateGroup.notify(queue: .main) { [unowned self] in
             if let user = self.user {
@@ -330,6 +285,15 @@ extension TaskListTableViewController: UISearchResultsUpdating {
 }
 
 extension TaskListTableViewController: AddTaskViewControllerDelegate {
+
+    func addTaskViewControllerDelegate(_ controller: AddTaskViewController, didUpdate task: Task) {
+        guard let indexPath = indexPathForSelectedTask else {
+            return
+        }
+
+        update(task, at: indexPath)
+    }
+
     func addTaskViewControllerDelegate(_ controller: AddTaskViewController, didFinishWith task: Task) {
 
         if let user = user {
@@ -351,18 +315,42 @@ extension TaskListTableViewController: CalendarViewControllerDelegate {
 }
 
 extension TaskListTableViewController: TaskCellDelegate {
+    func editButtonPressed(for indexPath: IndexPath?) {
+        guard let indexPath = indexPath else {
+            return
+        }
+        indexPathForSelectedTask = indexPath
+
+        if isSearching {
+            selectedTask = searchResultTasks[indexPath.row]
+        } else {
+            selectedTask = tasks[indexPath.row]
+        }
+
+        performSegue(withIdentifier: "addTaskSegue", sender: nil)
+    }
+
     func statusIconPressed(for indexPath: IndexPath?) {
         guard let indexPath = indexPath else {
             return
         }
+        var task: Task
 
         if isSearching {
-            let task = searchResultTasks[indexPath.row]
-            updateStatusFor(task, at: indexPath)
+            task = searchResultTasks[indexPath.row]
         } else {
-            let task = tasks[indexPath.row]
-            updateStatusFor(task, at: indexPath)
+            task = tasks[indexPath.row]
         }
+
+        let oldStatus = task.status
+
+        if oldStatus == .pending {
+            task.status = .done
+        } else {
+            task.status = .pending
+        }
+
+        update(task, at: indexPath)
     }
 }
 

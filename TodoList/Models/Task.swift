@@ -15,18 +15,15 @@ enum Status: String {
 
 struct Task {
     var status: Status = .pending
-    //Note: Making the title variable will result in a different id for the task. This will cause bugs if future features require tasks to be modifiable, since id's are meant to be unique.
-    var title: String {
-        didSet {
-            id = id + title
-        }
-    }
+    
+    var title: String
 
     var description: String
 
     var dueDate: Date
 
     private(set) var id: String = {
+        //Note: A better way is required to generate unique ids. Random numbers might cause a collision. 
         return String(Int.random(in: 0...10000000))
     }()
 

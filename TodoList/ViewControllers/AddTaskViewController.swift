@@ -10,6 +10,7 @@ import UIKit
 
 protocol AddTaskViewControllerDelegate: class {
     func addTaskViewControllerDelegate(_ controller: AddTaskViewController, didFinishWith task: Task)
+    func addTaskViewControllerDelegate(_ controller: AddTaskViewController, didUpdate task: Task)
 }
 
 class AddTaskViewController: UIViewController {
@@ -22,6 +23,7 @@ class AddTaskViewController: UIViewController {
     weak var delegate: AddTaskViewControllerDelegate?
 
     var taskDate: Date?
+    var selectedTask: Task?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +32,18 @@ class AddTaskViewController: UIViewController {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(dateLabelPressed))
         dateLabel.addGestureRecognizer(gestureRecognizer)
 
-        descriptionTextView.delegate = self
-        descriptionTextView.text = textViewPlaceHolder
-        descriptionTextView.textColor = .systemGray2
+        if let selectedTask = selectedTask {
+            descriptionTextView.text      = selectedTask.description
+            descriptionTextView.textColor = .black
+
+            dateLabel.text      = getDateDescription(selectedTask.dueDate)
+            titleTextField.text = selectedTask.title
+            taskDate = selectedTask.dueDate
+        } else {
+            descriptionTextView.delegate  = self
+            descriptionTextView.text      = textViewPlaceHolder
+            descriptionTextView.textColor = .systemGray2
+        }
     }
 
     @objc func dateLabelPressed() {
@@ -56,9 +67,16 @@ class AddTaskViewController: UIViewController {
             description = descriptionTextView.text
         }
 
-        let newTask = Task(title: title, description: description, dueDate: date)
-        
-        delegate?.addTaskViewControllerDelegate(self, didFinishWith: newTask)
+        if var resultTask = selectedTask {
+            resultTask.title       = title
+            resultTask.description = description
+            resultTask.dueDate     = date
+
+            delegate?.addTaskViewControllerDelegate(self, didUpdate: resultTask)
+        } else {
+            let newTask = Task(title: title, description: description, dueDate: date)
+            delegate?.addTaskViewControllerDelegate(self, didFinishWith: newTask)
+        }
 
         navigationController?.popViewController(animated: true)
     }
@@ -70,6 +88,15 @@ class AddTaskViewController: UIViewController {
         default:
             print("Unknown segue")
         }
+    }
+
+    private func getDateDescription(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .medium
+
+        return dateFormatter.string(from: date)
     }
 }
 
@@ -91,12 +118,8 @@ extension AddTaskViewController: UITextViewDelegate {
 
 extension AddTaskViewController: CalendarViewControllerDelegate {
     func calendarViewController(didFinishWith date: Date) {
-        let dateFormatter = DateFormatter()
 
-        dateFormatter.timeStyle = .none
-        dateFormatter.dateStyle = .medium
-
-        dateLabel.text = dateFormatter.string(from: date)
+        dateLabel.text = getDateDescription(date)
 
         taskDate = date
     }

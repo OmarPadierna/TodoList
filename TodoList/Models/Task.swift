@@ -13,14 +13,20 @@ enum Status {
     case done
 }
 
-///A task that represents something that the user has to do
 struct Task {
-    ///The status of the task
     var status: Status = .pending
-    ///The title of the task
-    let title: String
-    ///A description on the task
-    let description: String
-    ///The due date for the task
+    //Note: Making the title variable will result in a different id for the task. This will cause bugs if future features require tasks to be modifiable, since id's are meant to be unique.
+    var title: String {
+        didSet {
+            id = id + title
+        }
+    }
+
+    var description: String
+
     var dueDate: Date
+
+    private(set) var id: String = {
+        return String(Int.random(in: 0...10000000))
+    }()
 }

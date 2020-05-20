@@ -8,8 +8,19 @@
 
 import UIKit
 
+protocol TaskCellDelegate: class {
+    func statusIconPressed(for indexPath: IndexPath?)
+}
+
 class TaskCell: UITableViewCell {
-    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var descriptionLabel: UILabel!
-    @IBOutlet var dueDateLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel! 
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var statusButton: UIButton!
+
+    @IBAction func statusButtonPressed(_ sender: Any) {
+        delegate?.statusIconPressed(for: indexPath)
+    }
+
+    weak var delegate: TaskCellDelegate?
+    var indexPath: IndexPath?
 }

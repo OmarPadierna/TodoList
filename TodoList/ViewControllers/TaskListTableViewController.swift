@@ -20,7 +20,7 @@ class TaskListTableViewController: UITableViewController {
     private var isSearchBarEmpty: Bool {
       return searchController.searchBar.text?.isEmpty ?? true
     }
-    private var isFiltering: Bool {
+    private var isSearching: Bool {
       return searchController.isActive && !isSearchBarEmpty
     }
 
@@ -47,7 +47,7 @@ class TaskListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
+        if isSearching {
             return searchResultTasks.count
         }
 
@@ -60,7 +60,7 @@ class TaskListTableViewController: UITableViewController {
 
         let task: Task
 
-        if isFiltering {
+        if isSearching {
             task = searchResultTasks[indexPath.row]
         } else {
             task = tasks[indexPath.row]
@@ -68,6 +68,15 @@ class TaskListTableViewController: UITableViewController {
 
         cell.titleLabel.text       = task.title
         cell.descriptionLabel.text = expandedRows[indexPath.row] ? task.description : ""
+        cell.delegate = self
+        cell.indexPath = indexPath
+
+        switch task.status {
+        case .pending:
+            cell.statusButton.setImage(UIImage(systemName: "circle"), for: .normal)
+        case .done:
+            cell.statusButton.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+        }
 
         return cell
     }
@@ -77,7 +86,7 @@ class TaskListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        if isFiltering {
+        if isSearching {
             selectedTask = searchResultTasks[indexPath.row]
         } else {
             selectedTask = tasks[indexPath.row]
@@ -168,6 +177,88 @@ class TaskListTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
+    //We're dealing with 3 types of filtering: by status, by date and when searching. To preserve the task status when the user taps the cell button it is necessary to iterate through all the arrays (unfilteredTasks, tasks, and searchResultTasks) and update the task if it happens to exist in said array. In future iterations this whole controller could be refactored to move this logic out of here (And simplify it).
+    private func updateStatusFor(_ task: Task, at indexPath: IndexPath) {
+        let updateGroup = DispatchGroup()
+
+        switch task.status {
+        case .pending:
+            updateGroup.enter()
+            tasks = tasks.map { (arrayTask) -> Task in
+                if arrayTask.id == task.id {
+                    var updatedTask = arrayTask
+                    updatedTask.status = .done
+
+                    return updatedTask
+                }
+
+                return arrayTask
+            }
+
+            searchResultTasks = searchResultTasks.map { (arrayTask) -> Task in
+                if arrayTask.id == task.id {
+                    var updatedTask = arrayTask
+                    updatedTask.status = .done
+
+                    return updatedTask
+                }
+
+                return arrayTask
+            }
+
+            unfilteredTasks = unfilteredTasks.map { (arrayTask) -> Task in
+                if arrayTask.id == task.id {
+                    var updatedTask = arrayTask
+                    updatedTask.status = .done
+
+                    return updatedTask
+                }
+
+                return arrayTask
+            }
+            updateGroup.leave()
+        case .done:
+           updateGroup.enter()
+            tasks = tasks.map { (arrayTask) -> Task in
+                if arrayTask.id == task.id {
+                    var updatedTask = arrayTask
+                    updatedTask.status = .pending
+
+                    return updatedTask
+                }
+
+                return arrayTask
+            }
+
+            searchResultTasks = searchResultTasks.map { (arrayTask) -> Task in
+                if arrayTask.id == task.id {
+                    var updatedTask = arrayTask
+                    updatedTask.status = .pending
+
+                    return updatedTask
+                }
+
+                return arrayTask
+            }
+
+            unfilteredTasks = unfilteredTasks.map { (arrayTask) -> Task in
+                if arrayTask.id == task.id {
+                    var updatedTask = arrayTask
+                    updatedTask.status = .pending
+
+                    return updatedTask
+                }
+
+                return arrayTask
+            }
+            updateGroup.leave()
+        }
+
+        updateGroup.notify(queue: .main) { [unowned self] in
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+
     // MARK: - IBActions
 
     @IBAction func addTask(_ sender: Any) {
@@ -222,5 +313,21 @@ extension TaskListTableViewController: AddTaskViewControllerDelegate {
 extension TaskListTableViewController: CalendarViewControllerDelegate {
     func calendarViewController(didFinishWith date: Date) {
         filterByDate(date)
+    }
+}
+
+extension TaskListTableViewController: TaskCellDelegate {
+    func statusIconPressed(for indexPath: IndexPath?) {
+        guard let indexPath = indexPath else {
+            return
+        }
+
+        if isSearching {
+            let task = searchResultTasks[indexPath.row]
+            updateStatusFor(task, at: indexPath)
+        } else {
+            let task = tasks[indexPath.row]
+            updateStatusFor(task, at: indexPath)
+        }
     }
 }

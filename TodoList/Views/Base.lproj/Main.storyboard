@@ -16,9 +16,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="bZt-W2-ZRB">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQ2-j1-BuP">
+                                    <rect key="frame" x="10" y="7" width="394" height="30"/>
+                                    <state key="normal" title="Clear filters">
+                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="clearFiltersButtonTapped:" destination="EzB-lW-fQP" eventType="touchUpInside" id="Nae-Vp-gQs"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstItem="JQ2-j1-BuP" firstAttribute="centerY" secondItem="bZt-W2-ZRB" secondAttribute="centerY" id="4z6-GR-dc9"/>
+                                <constraint firstItem="JQ2-j1-BuP" firstAttribute="leading" secondItem="bZt-W2-ZRB" secondAttribute="leading" constant="10" id="HoR-xC-qPM"/>
+                                <constraint firstAttribute="trailing" secondItem="JQ2-j1-BuP" secondAttribute="trailing" constant="10" id="ZYw-VM-gH2"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskCell" rowHeight="112" id="FkD-It-Eio" customClass="TaskCell" customModule="TodoList" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="112"/>
+                                <rect key="frame" x="0.0" y="72" width="414" height="112"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FkD-It-Eio" id="zoC-7q-tnO">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="112"/>
@@ -70,11 +91,15 @@
                                     <segue destination="nVk-Mx-yUd" kind="show" identifier="addTaskSegue" id="zhT-Vg-Glp"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="line.horizontal.3.decrease.circle" catalog="system" id="Lz0-pA-ZlG"/>
+                            <barButtonItem image="line.horizontal.3.decrease.circle" catalog="system" id="Lz0-pA-ZlG">
+                                <connections>
+                                    <action selector="presentOptions:" destination="EzB-lW-fQP" id="MKT-6f-YHL"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <segue destination="WVV-yL-nLp" kind="show" identifier="calendarSegue" id="a2y-2z-jeP"/>
+                        <segue destination="WVV-yL-nLp" kind="presentation" identifier="calendarSegue" id="a2y-2z-jeP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xJv-Ft-W9Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -188,11 +213,11 @@
             <objects>
                 <viewController id="WVV-yL-nLp" customClass="CalendarViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tos-7g-gXM">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="hxO-h4-AWc">
-                                <rect key="frame" x="30" y="273" width="354" height="350"/>
+                                <rect key="frame" x="30" y="246" width="354" height="350"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qhR-QD-wre">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="20.5"/>
@@ -303,13 +328,13 @@
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUu-J0-f5A">
-                                <rect key="frame" x="30" y="108" width="354" height="24"/>
+                                <rect key="frame" x="30" y="20" width="354" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KG4-Mi-Ef6">
-                                <rect key="frame" x="30" y="777" width="354" height="45"/>
+                                <rect key="frame" x="30" y="723" width="354" height="45"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="dUW-su-LnC"/>
@@ -325,7 +350,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMO-2b-QPD">
-                                <rect key="frame" x="30" y="142" width="354" height="24"/>
+                                <rect key="frame" x="30" y="54" width="354" height="24"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

@@ -13,6 +13,15 @@
 		6540C2092474404200DE6CE0 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6540C2082474404200DE6CE0 /* TaskCell.swift */; };
 		6590F68324745A3600CF6FA6 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590F68224745A3600CF6FA6 /* AddTaskViewController.swift */; };
 		6590F6872474724C00CF6FA6 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590F6862474724C00CF6FA6 /* DateCell.swift */; };
+		6590F68B2474E21A00CF6FA6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6590F68A2474E21A00CF6FA6 /* GoogleService-Info.plist */; };
+		6590F68D2474EA0200CF6FA6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590F68C2474EA0200CF6FA6 /* LoginViewController.swift */; };
+		659C154C2475494C0098181F /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C154B2475494C0098181F /* FireBaseManager.swift */; };
+		659C154F24754E510098181F /* FirebaseSignInDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C154E24754E510098181F /* FirebaseSignInDelegate.swift */; };
+		659C155124754EA60098181F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C155024754EA60098181F /* User.swift */; };
+		659C155424755B3C0098181F /* ContainerEmbedSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C155324755B3C0098181F /* ContainerEmbedSegue.swift */; };
+		659C1556247577F30098181F /* FirebaseDecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C1555247577F30098181F /* FirebaseDecodingError.swift */; };
+		659C1558247597CF0098181F /* FirebaseTaskFetchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C1557247597CF0098181F /* FirebaseTaskFetchDelegate.swift */; };
+		659C155A2475D1FC0098181F /* FirebaseSignOutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C15592475D1FC0098181F /* FirebaseSignOutDelegate.swift */; };
 		65F26BE224735D08009FA650 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F26BE124735D08009FA650 /* AppDelegate.swift */; };
 		65F26BE424735D08009FA650 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F26BE324735D08009FA650 /* SceneDelegate.swift */; };
 		65F26BE924735D08009FA650 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F26BE724735D08009FA650 /* Main.storyboard */; };
@@ -43,6 +52,15 @@
 		6540C2082474404200DE6CE0 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		6590F68224745A3600CF6FA6 /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		6590F6862474724C00CF6FA6 /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		6590F68A2474E21A00CF6FA6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6590F68C2474EA0200CF6FA6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		659C154B2475494C0098181F /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
+		659C154E24754E510098181F /* FirebaseSignInDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseSignInDelegate.swift; sourceTree = "<group>"; };
+		659C155024754EA60098181F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		659C155324755B3C0098181F /* ContainerEmbedSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerEmbedSegue.swift; sourceTree = "<group>"; };
+		659C1555247577F30098181F /* FirebaseDecodingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDecodingError.swift; sourceTree = "<group>"; };
+		659C1557247597CF0098181F /* FirebaseTaskFetchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTaskFetchDelegate.swift; sourceTree = "<group>"; };
+		659C15592475D1FC0098181F /* FirebaseSignOutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseSignOutDelegate.swift; sourceTree = "<group>"; };
 		65F26BDE24735D08009FA650 /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F26BE124735D08009FA650 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65F26BE324735D08009FA650 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				6540C20624743CA300DE6CE0 /* Task.swift */,
+				659C155024754EA60098181F /* User.swift */,
+				659C1555247577F30098181F /* FirebaseDecodingError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -103,6 +123,7 @@
 				6540C20224743C0800DE6CE0 /* TaskListTableViewController.swift */,
 				6540C20424743C1C00DE6CE0 /* CalendarViewController.swift */,
 				6590F68224745A3600CF6FA6 /* AddTaskViewController.swift */,
+				6590F68C2474EA0200CF6FA6 /* LoginViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -110,6 +131,7 @@
 		6540C20024743BCA00DE6CE0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				659C155224755B270098181F /* UIUtilities */,
 				6590F6842474722E00CF6FA6 /* CollectionViewCells */,
 				6540C20A247440A500DE6CE0 /* TableViewCells */,
 				65F26BEC24735D0A009FA650 /* LaunchScreen.storyboard */,
@@ -121,6 +143,8 @@
 		6540C20124743BD000DE6CE0 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				659C154D24754E390098181F /* Delegates */,
+				659C154B2475494C0098181F /* FireBaseManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -139,6 +163,24 @@
 				6590F6862474724C00CF6FA6 /* DateCell.swift */,
 			);
 			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		659C154D24754E390098181F /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				659C154E24754E510098181F /* FirebaseSignInDelegate.swift */,
+				659C1557247597CF0098181F /* FirebaseTaskFetchDelegate.swift */,
+				659C15592475D1FC0098181F /* FirebaseSignOutDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		659C155224755B270098181F /* UIUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				659C155324755B3C0098181F /* ContainerEmbedSegue.swift */,
+			);
+			path = UIUtilities;
 			sourceTree = "<group>";
 		};
 		65F26BD524735D08009FA650 = {
@@ -171,6 +213,7 @@
 				65F26BE124735D08009FA650 /* AppDelegate.swift */,
 				65F26BE324735D08009FA650 /* SceneDelegate.swift */,
 				65F26BEA24735D0A009FA650 /* Assets.xcassets */,
+				6590F68A2474E21A00CF6FA6 /* GoogleService-Info.plist */,
 				65F26BEF24735D0A009FA650 /* Info.plist */,
 			);
 			path = TodoList;
@@ -206,6 +249,7 @@
 				65F26BDB24735D08009FA650 /* Frameworks */,
 				65F26BDC24735D08009FA650 /* Resources */,
 				C2F1184030E4994F1E3CDE61 /* [CP] Embed Pods Frameworks */,
+				39FA52F833E3C3E6DB56F7DD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -279,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65F26BEE24735D0A009FA650 /* LaunchScreen.storyboard in Resources */,
+				6590F68B2474E21A00CF6FA6 /* GoogleService-Info.plist in Resources */,
 				65F26BEB24735D0A009FA650 /* Assets.xcassets in Resources */,
 				65F26BE924735D08009FA650 /* Main.storyboard in Resources */,
 			);
@@ -294,6 +339,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		39FA52F833E3C3E6DB56F7DD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TodoList/Pods-TodoList-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TodoList/Pods-TodoList-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TodoList/Pods-TodoList-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		67A3654524B307BD4DCB03B6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -362,14 +424,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				659C154F24754E510098181F /* FirebaseSignInDelegate.swift in Sources */,
+				6590F68D2474EA0200CF6FA6 /* LoginViewController.swift in Sources */,
 				6540C20524743C1C00DE6CE0 /* CalendarViewController.swift in Sources */,
+				659C154C2475494C0098181F /* FireBaseManager.swift in Sources */,
+				659C1558247597CF0098181F /* FirebaseTaskFetchDelegate.swift in Sources */,
 				6540C20324743C0800DE6CE0 /* TaskListTableViewController.swift in Sources */,
+				659C1556247577F30098181F /* FirebaseDecodingError.swift in Sources */,
 				6540C20724743CA300DE6CE0 /* Task.swift in Sources */,
 				65F26BE224735D08009FA650 /* AppDelegate.swift in Sources */,
 				6540C2092474404200DE6CE0 /* TaskCell.swift in Sources */,
+				659C155124754EA60098181F /* User.swift in Sources */,
 				65F26BE424735D08009FA650 /* SceneDelegate.swift in Sources */,
 				6590F68324745A3600CF6FA6 /* AddTaskViewController.swift in Sources */,
+				659C155A2475D1FC0098181F /* FirebaseSignOutDelegate.swift in Sources */,
 				6590F6872474724C00CF6FA6 /* DateCell.swift in Sources */,
+				659C155424755B3C0098181F /* ContainerEmbedSegue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

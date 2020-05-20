@@ -7,6 +7,11 @@ target 'TodoList' do
 
   # Pods for TodoList
   pod 'JTAppleCalendar'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
+  pod 'Firebase/Firestore'
+  pod 'FirebaseFirestoreSwift'
 
   target 'TodoListTests' do
     inherit! :search_paths

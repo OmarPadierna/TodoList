@@ -7,48 +7,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "137C68C5-7AC1-4AA4-B589-887D25785034"
-            shouldBeEnabled = "No"
+            uuid = "C9FE903B-BE7A-4FEB-88B4-486B68BE379D"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TodoList/ViewControllers/TaskListTableViewController.swift"
+            filePath = "TodoList/Utilities/FireBaseManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "save(_:for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "85F345C8-BF3B-4628-9D64-280E04AA6396"
-            shouldBeEnabled = "No"
+            uuid = "0FC8BBEA-A92E-4B38-9B19-E1A230458DED"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TodoList/ViewControllers/TaskListTableViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "tableView(_:commit:forRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3C346BDC-C6EF-4A2B-8CD2-104F767CAA1B"
-            shouldBeEnabled = "No"
+            uuid = "F8240C2A-4C1F-41A7-B806-226B92C8915C"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TodoList/Views/TableViewCells/TaskCell.swift"
+            filePath = "TodoList/Utilities/FireBaseManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "statusButtonPressed(_:)"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "remove(_:for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6941E0C8-6ACB-4747-9911-3C5D86BF68F5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TodoList/Utilities/FireBaseManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "remove(_:for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

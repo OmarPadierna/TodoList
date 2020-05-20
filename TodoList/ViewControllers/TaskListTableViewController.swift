@@ -13,6 +13,7 @@ class TaskListTableViewController: UITableViewController {
 
     var tasks: [Task] = []
     var unfilteredTasks: [Task] = []
+    var user: User?
 
     private var selectedTask: Task?
     private var searchResultTasks: [Task] = []
@@ -38,6 +39,18 @@ class TaskListTableViewController: UITableViewController {
 
         unfilteredTasks = tasks
         tableView.tableHeaderView?.isHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if self.isMovingFromParent {
+            if let user = user {
+                let defaults = UserDefaults.standard
+                defaults.removeObject(forKey: "User")
+                FireBaseManager.signOut(user, delegate: self)
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -99,11 +112,24 @@ class TaskListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+        guard isSearching == false else {
+            return
+        }
+
         if editingStyle == .delete {
+            let task = tasks[indexPath.row]
+
             tasks.remove(at: indexPath.row)
             expandedRows.remove(at: indexPath.row)
+
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
             updateUnfilteredTasks()
+
+            if let user = user {
+                FireBaseManager.remove(task, for: user)
+            }
         }
     }
 
@@ -255,6 +281,10 @@ class TaskListTableViewController: UITableViewController {
         }
 
         updateGroup.notify(queue: .main) { [unowned self] in
+            if let user = self.user {
+                FireBaseManager.update(task, for: user)
+            }
+
             self.tableView.reloadRows(at: [indexPath], with: .none)
         }
     }
@@ -302,6 +332,10 @@ extension TaskListTableViewController: UISearchResultsUpdating {
 extension TaskListTableViewController: AddTaskViewControllerDelegate {
     func addTaskViewControllerDelegate(_ controller: AddTaskViewController, didFinishWith task: Task) {
 
+        if let user = user {
+            FireBaseManager.save(task, for: user)
+        }
+
         tasks.append(task)
         expandedRows.append(false)
         updateUnfilteredTasks()
@@ -329,5 +363,12 @@ extension TaskListTableViewController: TaskCellDelegate {
             let task = tasks[indexPath.row]
             updateStatusFor(task, at: indexPath)
         }
+    }
+}
+
+extension TaskListTableViewController: FirebaseSignOutDelegate {
+    func signOutDidFail(with error: Error) {
+        //TODO: Display alert
+        print(error)
     }
 }

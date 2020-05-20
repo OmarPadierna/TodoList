@@ -7,7 +7,20 @@
 		<key>TodoList.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>29</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>65F26BDD24735D08009FA650</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>65F26BF324735D0B009FA650</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

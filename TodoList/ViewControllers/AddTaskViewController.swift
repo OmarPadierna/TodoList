@@ -57,7 +57,7 @@ class AddTaskViewController: UIViewController {
         }
 
         let newTask = Task(title: title, description: description, dueDate: date)
-
+        
         delegate?.addTaskViewControllerDelegate(self, didFinishWith: newTask)
 
         navigationController?.popViewController(animated: true)

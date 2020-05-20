@@ -10,6 +10,7 @@ import UIKit
 
 protocol TaskCellDelegate: class {
     func statusIconPressed(for indexPath: IndexPath?)
+    func editButtonPressed(for indexPath: IndexPath?)
 }
 
 class TaskCell: UITableViewCell {
@@ -19,6 +20,10 @@ class TaskCell: UITableViewCell {
 
     @IBAction func statusButtonPressed(_ sender: Any) {
         delegate?.statusIconPressed(for: indexPath)
+    }
+
+    @IBAction func editButtonTapped(_ sender: Any) {
+        delegate?.editButtonPressed(for: indexPath)
     }
 
     weak var delegate: TaskCellDelegate?

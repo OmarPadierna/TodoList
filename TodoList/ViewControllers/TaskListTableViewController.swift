@@ -9,9 +9,9 @@
 import UIKit
 
 class TaskListTableViewController: UITableViewController {
-    private let searchController      = UISearchController(searchResultsController: nil)
+    private let searchController = UISearchController(searchResultsController: nil)
 
-    var tasks: [Task]                 = []
+    var tasks: [Task] = []
 
     private var selectedTask: Task?
 
@@ -26,16 +26,6 @@ class TaskListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //TODO: Remove this dummy data
-        let task        = Task(title: "A random task",
-                               description: "A random description",
-                               dueDate: .init(timeIntervalSinceNow: 24.0*60.0*60.0))
-        let anotherTask = Task(title: "Another task",
-                               description: "Another random description",
-                               dueDate: .init(timeIntervalSinceNow: 48.0*60.0*60.0))
-        tasks.append(task)
-        tasks.append(anotherTask)
 
         searchController.searchResultsUpdater                 = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -99,13 +89,31 @@ class TaskListTableViewController: UITableViewController {
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tasks.remove(at: indexPath.row)
+            expandedRows.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
     // MARK: - Functions
+
     func filterContentForSearchText(_ searchText: String) {
         filteredTasks = tasks.filter { (task: Task) -> Bool in
         return task.title.lowercased().contains(searchText.lowercased())
       }
 
       tableView.reloadData()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch (segue.destination, segue.identifier) {
+        case (let vc as AddTaskViewController, _):
+            vc.delegate = self
+        default:
+            print("Unknown segue")
+        }
     }
 
     // MARK: - IBActions
@@ -120,6 +128,16 @@ extension TaskListTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
        let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
+    }
+}
+
+extension TaskListTableViewController: AddTaskViewControllerDelegate {
+    func addTaskViewControllerDelegate(_ controller: AddTaskViewController, didFinishWith task: Task) {
+
+        tasks.append(task)
+        expandedRows.append(false)
+
+        tableView.reloadData()
     }
 
 }

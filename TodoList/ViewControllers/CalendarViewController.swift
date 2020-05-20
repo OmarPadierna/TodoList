@@ -9,13 +9,34 @@
 import UIKit
 import JTAppleCalendar
 
+protocol CalendarViewControllerDelegate: class {
+    func calendarViewController(didFinishWith date: Date)
+}
+
 class CalendarViewController: UIViewController {
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
+    @IBOutlet weak var doneButton: UIButton!
+
+    weak var delegate: CalendarViewControllerDelegate?
+
+    var cancelEnabled: Bool?
+
+    private var selectedDate: Date? {
+        didSet {
+            if selectedDate == nil {
+                doneButton.isEnabled = false
+            } else {
+                doneButton.isEnabled = true
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        doneButton.isEnabled = false
 
         calendarView.visibleDates { (visibleDates) in
             let date = visibleDates.monthDates.first!.date
@@ -48,6 +69,15 @@ class CalendarViewController: UIViewController {
         }
     }
 
+    @IBAction func didTapDoneButton(_ sender: Any) {
+        guard let selectedDate = selectedDate else {
+            return
+        }
+
+        delegate?.calendarViewController(didFinishWith: selectedDate)
+        self.dismiss(animated: true, completion: nil)
+    }
+
 }
 
 extension CalendarViewController: JTAppleCalendarViewDataSource {
@@ -77,6 +107,8 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
         if cellState.dateBelongsTo == .thisMonth {
             cell.selectedView.isHidden = false
         }
+
+        selectedDate = date
     }
 
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {

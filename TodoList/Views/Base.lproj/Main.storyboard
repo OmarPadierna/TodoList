@@ -112,7 +112,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Add a description here..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="N5C-yS-Voc">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" text="Add a description here..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="N5C-yS-Voc">
                                 <rect key="frame" x="30" y="284" width="354" height="179"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
@@ -140,6 +140,9 @@
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="nVk-Mx-yUd" eventType="touchUpInside" id="buq-h2-gCa"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -173,7 +176,7 @@
                         <outlet property="dateLabel" destination="JOn-Im-MaD" id="vYN-Qf-E3S"/>
                         <outlet property="descriptionTextView" destination="N5C-yS-Voc" id="Hzv-8F-HD6"/>
                         <outlet property="titleTextField" destination="2o9-Sc-Zr4" id="zWB-8N-DKr"/>
-                        <segue destination="WVV-yL-nLp" kind="show" identifier="calendarViewSegue" id="u3n-XM-suP"/>
+                        <segue destination="WVV-yL-nLp" kind="presentation" identifier="calendarViewSegue" id="u3n-XM-suP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HsW-aH-KbU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -317,6 +320,9 @@
                                         <integer key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didTapDoneButton:" destination="WVV-yL-nLp" eventType="touchUpInside" id="liH-po-agf"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMO-2b-QPD">
                                 <rect key="frame" x="30" y="142" width="354" height="24"/>
@@ -346,6 +352,7 @@
                     <navigationItem key="navigationItem" title="Select a day" id="8Gr-WR-90C"/>
                     <connections>
                         <outlet property="calendarView" destination="Ph1-OC-08F" id="1lE-84-oHU"/>
+                        <outlet property="doneButton" destination="KG4-Mi-Ef6" id="fPE-0F-7gF"/>
                         <outlet property="monthLabel" destination="hMO-2b-QPD" id="cdq-9L-qe6"/>
                         <outlet property="yearLabel" destination="zUu-J0-f5A" id="w5K-wz-Im8"/>
                     </connections>

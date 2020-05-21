@@ -28,8 +28,11 @@ class AddTaskViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        createDismissKeyboardTapGesture()
+
+        titleTextField.delegate = self
         titleTextField.borderStyle = .none
-        titleTextField.attributedPlaceholder = NSAttributedString(string: "Please add a title", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        titleTextField.attributedPlaceholder = NSAttributedString(string: "Please add a title", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray6])
 
         dateLabel.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(dateLabelPressed))
@@ -40,13 +43,22 @@ class AddTaskViewController: UIViewController {
             descriptionTextView.textColor = .white
 
             dateLabel.text      = getDateDescription(selectedTask.dueDate)
+            dateLabel.textColor = .systemGray6
             titleTextField.text = selectedTask.title
             taskDate = selectedTask.dueDate
         } else {
             descriptionTextView.delegate  = self
             descriptionTextView.text      = textViewPlaceHolder
-            descriptionTextView.textColor = .systemGray5
+            descriptionTextView.textColor = .systemGray6
         }
+
+        descriptionTextView.keyboardDismissMode = .onDrag
+        descriptionTextView.delegate = self
+    }
+
+    func createDismissKeyboardTapGesture() {
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
 
     @objc func dateLabelPressed() {
@@ -62,7 +74,13 @@ class AddTaskViewController: UIViewController {
         }
 
         guard let date = taskDate else {
-            //TODO: Display alert here.
+            let alert = UIAlertController(title: "Error", message: "Please add a date", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+
+            alert.addAction(okAction)
+
+            present(alert, animated: true, completion: nil)
+            
             return
         }
 
@@ -105,7 +123,7 @@ class AddTaskViewController: UIViewController {
 
 extension AddTaskViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .some(.systemGray5) {
+        if textView.textColor == .some(.systemGray6) {
             textView.text = nil
             textView.textColor = .white
         }
@@ -114,7 +132,7 @@ extension AddTaskViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = textViewPlaceHolder
-            textView.textColor = .systemGray5
+            textView.textColor = .systemGray6
         }
     }
 }
@@ -123,8 +141,16 @@ extension AddTaskViewController: CalendarViewControllerDelegate {
     func calendarViewController(didFinishWith date: Date) {
 
         dateLabel.text = getDateDescription(date)
+        dateLabel.textColor = .white
 
         taskDate = date
     }
 }
 
+extension AddTaskViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+
+        return true
+    }
+}

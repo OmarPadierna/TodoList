@@ -120,7 +120,7 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
     }
 
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
-        //TODO: Check if this force unwrapping is safe.
+        
         let date = visibleDates.monthDates.first!.date
         let formatter = DateFormatter()
 

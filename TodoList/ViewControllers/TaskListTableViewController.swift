@@ -359,7 +359,6 @@ extension TaskListTableViewController: TaskCellDelegate {
 
 extension TaskListTableViewController: FirebaseSignOutDelegate {
     func signOutDidFail(with error: Error) {
-        //TODO: Display alert
         print(error)
     }
 }

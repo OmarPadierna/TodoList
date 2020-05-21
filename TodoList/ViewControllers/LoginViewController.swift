@@ -85,7 +85,12 @@ extension LoginViewController: FirebaseSignInDelegate {
     }
 
     func signInFailed(with error: Error) {
-        //TODO: Display alert with error.
+        let alert = UIAlertController(title: "Failed Sign inn", message: "There was an error signing in. \(error.localizedDescription)", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+
+        alert.addAction(okAction)
+
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -96,6 +101,11 @@ extension LoginViewController: FirebaseTaskFetchDelegate {
     }
 
     func fetchDidFail(with error: Error) {
-        //TODO: Display alert with error
+        let alert = UIAlertController(title: "Error fetching tasks", message: "There was an error fetching tasks. \(error.localizedDescription)", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
     }
 }

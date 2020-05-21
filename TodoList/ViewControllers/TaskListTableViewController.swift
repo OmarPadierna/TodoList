@@ -40,6 +40,7 @@ class TaskListTableViewController: UITableViewController {
 
         unfilteredTasks = tasks
         tableView.tableHeaderView?.isHidden = true
+        tableView.separatorStyle = .none
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,6 +72,8 @@ class TaskListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskCell
+
+        cell.selectionStyle = .none
 
         let task: Task
 
@@ -109,7 +112,7 @@ class TaskListTableViewController: UITableViewController {
         let expandedState           = expandedRows[indexPath.row]
         expandedRows[indexPath.row] = !expandedState
 
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

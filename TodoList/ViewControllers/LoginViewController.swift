@@ -21,6 +21,10 @@ class LoginViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+
         if let encodedUser = defaults.data(forKey: "User"),
             let savedUser = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(encodedUser) as? User {
             user = savedUser
@@ -35,6 +39,12 @@ class LoginViewController: UIViewController {
             loginButton.isHidden = false
             loginButton.isEnabled = true
         }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
 
@@ -63,6 +73,11 @@ extension LoginViewController: FirebaseSignInDelegate {
             let encodedUser = try NSKeyedArchiver.archivedData(withRootObject: user, requiringSecureCoding: false)
             defaults.set(encodedUser, forKey: "User")
             self.user = user
+
+            loginButton.isHidden = true
+            loginButton.isEnabled = false
+            activityIndicator.startAnimating()
+
             FireBaseManager.fetchTasks(for: user, delegate: self)
         } catch {
             print(error)

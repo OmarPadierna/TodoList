@@ -28,13 +28,16 @@ class AddTaskViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        titleTextField.borderStyle = .none
+        titleTextField.attributedPlaceholder = NSAttributedString(string: "Please add a title", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+
         dateLabel.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(dateLabelPressed))
         dateLabel.addGestureRecognizer(gestureRecognizer)
 
         if let selectedTask = selectedTask {
             descriptionTextView.text      = selectedTask.description
-            descriptionTextView.textColor = .black
+            descriptionTextView.textColor = .white
 
             dateLabel.text      = getDateDescription(selectedTask.dueDate)
             titleTextField.text = selectedTask.title
@@ -42,7 +45,7 @@ class AddTaskViewController: UIViewController {
         } else {
             descriptionTextView.delegate  = self
             descriptionTextView.text      = textViewPlaceHolder
-            descriptionTextView.textColor = .systemGray2
+            descriptionTextView.textColor = .systemGray5
         }
     }
 
@@ -102,16 +105,16 @@ class AddTaskViewController: UIViewController {
 
 extension AddTaskViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .some(.systemGray2) {
+        if textView.textColor == .some(.systemGray5) {
             textView.text = nil
-            textView.textColor = .black
+            textView.textColor = .white
         }
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = textViewPlaceHolder
-            textView.textColor = .systemGray2
+            textView.textColor = .systemGray5
         }
     }
 }
